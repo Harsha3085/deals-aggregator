@@ -102,7 +102,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import os
 
 # Update allowed hosts for Render
-ALLOWED_HOSTS = ['deals-aggregator-arl1.onrender.com', 'localhost', '127.0.0.1','.onrender.com']
+ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1']
 
 # Add this for production (Render will override)
 if 'RENDER' in os.environ:
