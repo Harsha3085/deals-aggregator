@@ -1,0 +1,187 @@
+{% extends 'base.html' %}
+
+{% block title %}Best Daily Deals & Discounts - DealFinder{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="alert alert-info">
+            <i class="fas fa-sync-alt me-2"></i>
+            <strong>{{ total_deals }}</strong> active deals available
+            <a href="/admin/" class="float-end btn btn-sm btn-primary">
+                Admin Panel
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Sidebar Filters -->
+    <div class="col-md-3">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Filters</h5>
+                
+                <form method="GET" action="/">
+                    <!-- Category Filter -->
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select name="category" class="form-select">
+                            <option value="">All Categories</option>
+                            {% for cat in categories %}
+                            <option value="{{ cat.slug }}" {% if cat.slug == selected_category %}selected{% endif %}>
+                                {{ cat.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <!-- Sort Options -->
+                    <div class="mb-3">
+                        <label class="form-label">Sort By</label>
+                        <select name="sort" class="form-select">
+                            <option value="-deal_score">Best Deals</option>
+                            <option value="-discount_percentage">Highest Discount</option>
+                            <option value="discounted_price">Price: Low to High</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+                    <a href="/" class="btn btn-outline-secondary w-100 mt-2">Reset</a>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="card">
+            <div class="card-body">
+                <h5>Quick Stats</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-shopping-cart text-primary me-2"></i>
+                        <strong>{{ total_deals }}</strong> Deals
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-tag text-success me-2"></i>
+                        <strong>{{ sites_count }}</strong> Stores
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-clock text-info me-2"></i>
+                        Updated daily
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Deals Grid -->
+    <div class="col-md-9">
+        {% if selected_category %}
+        <div class="mb-3">
+            <span class="badge bg-info">
+                Category: {{ selected_category|title }}
+            </span>
+        </div>
+        {% endif %}
+        
+        {% if deals %}
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for deal in deals %}
+            <div class="col">
+                <div class="card deal-card h-100">
+                    <!-- Discount Badge -->
+                    {% if deal.discount_percentage %}
+                    <div class="discount-badge">
+                        {{ deal.discount_percentage }}% OFF
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Site Badge -->
+                    <div class="site-badge">
+                        {{ deal.source_site.name|title }}
+                    </div>
+                    
+                    <!-- Product Image -->
+                    <a href="{{ deal.product_url }}" target="_blank" onclick="trackClick({{ deal.id }})">
+                        <img src="{{ deal.image_url|default:'https://via.placeholder.com/300x200?text=No+Image' }}" 
+                             class="deal-image" 
+                             alt="{{ deal.title }}">
+                    </a>
+                    
+                    <div class="card-body">
+                        <!-- Title -->
+                        <h5 class="card-title deal-title">
+                            <a href="{{ deal.product_url }}" 
+                               target="_blank"
+                               onclick="trackClick({{ deal.id }})"
+                               class="text-dark text-decoration-none">
+                                {{ deal.title }}
+                            </a>
+                        </h5>
+                        
+                        <!-- Category -->
+                        <div class="mb-2">
+                            <span class="badge bg-light text-dark">
+                                {{ deal.category.name|default:"Other" }}
+                            </span>
+                        </div>
+                        
+                        <!-- Prices -->
+                        <div class="mb-3">
+                            {% if deal.original_price %}
+                            <div class="price-original mb-1">
+                                ${{ deal.original_price }}
+                            </div>
+                            {% endif %}
+                            
+                            <div class="price-discounted">
+                                ${{ deal.discounted_price }}
+                            </div>
+                        </div>
+                        
+                        <!-- Action Button -->
+                        <a href="{{ deal.product_url }}" 
+                           target="_blank"
+                           onclick="trackClick({{ deal.id }})"
+                           class="btn btn-primary w-100">
+                            <i class="fas fa-external-link-alt me-1"></i> View Deal
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination (Simple) -->
+        {% if deals.has_other_pages %}
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                {% if deals.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ deals.previous_page_number }}">Previous</a>
+                </li>
+                {% endif %}
+                
+                <li class="page-item active">
+                    <span class="page-link">Page {{ deals.number }} of {{ deals.paginator.num_pages }}</span>
+                </li>
+                
+                {% if deals.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ deals.next_page_number }}">Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        
+        {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+            <h4>No deals found</h4>
+            <p>Try adjusting your filters or check back later!</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

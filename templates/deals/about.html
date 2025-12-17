@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}About DealFinder{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title text-center mb-4">About DealFinder</h1>
+                
+                <div class="text-center mb-4">
+                    <i class="fas fa-tags fa-4x text-primary"></i>
+                </div>
+                
+                <h3>What is DealFinder?</h3>
+                <p class="lead">
+                    DealFinder is an automated platform that finds and lists the best deals, 
+                    coupons, and discounts from all major e-commerce websites every day.
+                </p>
+                
+                <hr>
+                
+                <h3>How It Works</h3>
+                <div class="row mt-3">
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="p-3 border rounded">
+                            <i class="fas fa-robot fa-2x text-primary mb-2"></i>
+                            <h5>1. Automated Scraping</h5>
+                            <p>Our system automatically scans multiple e-commerce sites daily</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="p-3 border rounded">
+                            <i class="fas fa-filter fa-2x text-success mb-2"></i>
+                            <h5>2. Smart Filtering</h5>
+                            <p>We filter and rank deals based on quality and discount percentage</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center mb-3">
+                        <div class="p-3 border rounded">
+                            <i class="fas fa-eye fa-2x text-info mb-2"></i>
+                            <h5>3. Easy Browsing</h5>
+                            <p>Users can browse, filter, and click through to purchase</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <h3>Current Features</h3>
+                <ul>
+                    <li>Daily automatic deal discovery</li>
+                    <li>Multiple e-commerce site support (Amazon, Flipkart, etc.)</li>
+                    <li>Smart categorization of deals</li>
+                    <li>Filtering by category, price, and discount</li>
+                    <li>Direct links to product pages</li>
+                    <li>Admin panel for manual curation</li>
+                </ul>
+                
+                <hr>
+                
+                <h3>For Developers</h3>
+                <p>This is a demo project built with:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul>
+                            <li><strong>Backend:</strong> Django (Python)</li>
+                            <li><strong>Database:</strong> SQLite (development)</li>
+                            <li><strong>Frontend:</strong> Bootstrap 5</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li><strong>Scraping:</strong> BeautifulSoup, Requests</li>
+                            <li><strong>Hosting:</strong> Render.com (free tier)</li>
+                            <li><strong>Version Control:</strong> Git</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <a href="/" class="btn btn-primary btn-lg">
+                        <i class="fas fa-tags me-2"></i>Browse Deals
+                    </a>
+                    <a href="/admin/" class="btn btn-outline-secondary btn-lg ms-2">
+                        <i class="fas fa-cog me-2"></i>Admin Panel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

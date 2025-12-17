@@ -1,0 +1,27 @@
+{
+  "amazon": {
+    "deals_page": "https://www.amazon.com/gp/goldbox",
+    "selectors": {
+      "deal_container": ".a-section.dealTile",
+      "title": ".dealTitleText",
+      "price_original": ".a-text-price span",
+      "price_discounted": ".priceBlockDealPriceString",
+      "image": ".a-dynamic-image",
+      "product_link": ".a-link-normal.dealContainerLink"
+    },
+    "needs_js": true
+  },
+  "flipkart": {
+    "deals_page": "https://www.flipkart.com/offers-list",
+    "selectors": {
+      "deal_container": "._3GnUWp",
+      "title": "._2cLu-l",
+      "price_original": "._1vC4OE._3qQ9m1",
+      "price_discounted": "._1vC4OE",
+      "image": "._3togXc",
+      "product_link": "._3dqZjq",
+      "discount": ".VGWI6T"
+    },
+    "needs_js": false
+  }
+}
